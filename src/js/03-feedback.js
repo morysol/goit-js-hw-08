@@ -50,7 +50,6 @@ function printFormData(storage) {
 feedbackForm.addEventListener('input', _.throttle(logInputedString, 500));
 
 function logInputedString(e) {
-  //   console.log(e, e.target.value, e.target.type, e.target.hasAttribute('autofocus'));
   const name = e.target.name;
   const value = e.target.value;
   switch (name) {
