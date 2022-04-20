@@ -17,12 +17,12 @@ function handleSubmit(event) {
     return console.log('Please fill in all the fields!');
   }
 
-  console.log(` ------> submited email: ${email.value}, message: ${message.value}`);
+  console.log(` ------> submited email: "${email.value}", message: "${message.value}"`);
 
   loggingEmailMessage('email', '');
   loggingEmailMessage('message', '');
 
-  document.querySelector('textarea[name=message]').textContent = '';
+  feedbackForm.querySelector('textarea[name=message]').textContent = '';
 
   event.currentTarget.reset();
 }
@@ -30,39 +30,22 @@ function handleSubmit(event) {
 // logging
 
 const localStorageLable = 'feedback-form-state';
-const localStorageEmailMessage = localStorage.getItem(localStorageLable);
+const localStorageFormData = localStorage.getItem(localStorageLable);
 
-// console.log(localStorage.getItem('zzxxcc'));
-// testObj = JSON.parse(localStorage.getItem('zzxxcc'));
-// console.log(localStorage.getItem('testObj'));
-// if (testObj === null) {
-//   alert(null);
-// }
-
-// if (localStorageEmailMessage.email !== undefined) {
-//   console.log(localStorageEmailMessage.email);
-// }
-// if (localStorageEmailMessage.message !== undefined) {
-//   console.log(localStorageEmailMessage.message);
-// }
-
-let storageInProgress = JSON.parse(localStorageEmailMessage);
-
-if (storageInProgress === null) {
-  storageInProgress = {
+let formData = JSON.parse(localStorageFormData);
+if (formData === null) {
+  formData = {
     email: '',
     message: '',
   };
 }
 
-console.log(
-  // storageInProgress.email,
-  // localStorageEmailMessage,
-  JSON.parse(localStorageEmailMessage),
-);
+printFormData(formData);
 
-document.querySelector('input[name=email]').value = storageInProgress.email;
-document.querySelector('textarea[name=message]').textContent = storageInProgress.message;
+function printFormData(storage) {
+  document.querySelector('input[name=email]').value = storage.email;
+  document.querySelector('textarea[name=message]').textContent = storage.message;
+}
 
 feedbackForm.addEventListener('input', _.throttle(logInputedString, 500));
 
@@ -85,10 +68,7 @@ function logInputedString(e) {
 }
 
 function loggingEmailMessage(name, value) {
-  // console.log('logging', name, value);
-  // console.log(storageInProgress);
+  formData[name] = value;
 
-  storageInProgress[name] = value;
-
-  localStorage.setItem(localStorageLable, JSON.stringify(storageInProgress));
+  localStorage.setItem(localStorageLable, JSON.stringify(formData));
 }
