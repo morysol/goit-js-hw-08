@@ -3,6 +3,7 @@ const _ = require('lodash');
 const feedbackForm = document.querySelector('.feedback-form');
 
 // submiting
+//
 
 feedbackForm.addEventListener('submit', handleSubmit);
 
